@@ -6,6 +6,8 @@ function onStart() {
     console.log('jq');
     getTasks();
     $('#btn-add-task').on('click', addTask);
+    $('#task-list').on('click', '.btn-delete', removeTask);
+    $('#task-list').on('click', '.btn-status', updateStatus)
 }
 
 // function to empty all inputs on click
@@ -45,32 +47,67 @@ function addTask() {
     })
 } // end addTask
 
+// function to render all existing tasks into table on DOM
 function renderTasks(taskArray) {
     $('#task-list').empty();
     for (task of taskArray) {
         if (task.status === 'Incomplete') {
-            let $tr = $(`
-        <tr>
-        <td>${task.taskname}</td>
-        <td>${task.status}</td>
-        <td><button class="btn-delete">Delete</button></td>
-        <td><button class="btn-status">Completed</button></td>
-        </tr>
-        `);
+            let $tr = $(`<tr>
+                <td>${task.taskname}</td>
+                <td>${task.status}</td>
+                <td><button class="btn-delete">Delete</button></td>
+                <td><button class="btn-status">Completed</button></td>
+            </tr>`);
             $('#task-list').append($tr);
             $tr.data(task);
         }
-        else {
-            let $tr = $(`
-        <tr>
-        <td>${task.taskname}</td>
-        <td>${task.status}</td>
-        <td><button class="btn-delete">Delete</button></td>
-        </tr>
-        </tr>
-        `);
+        else if (task.status === 'Completed') {
+            let $tr = $(`<tr class="task-complete">
+                <td>${task.taskname}</td>
+                <td>${task.status}</td>
+                <td><button class="btn-delete">Delete</button></td>
+                <td> </td>
+            </tr>`);
             $('#task-list').append($tr);
             $tr.data(task);
         }
     }
+} // end renderTasks
+
+// function to delete data for closest table row task on delete button click
+function removeTask() {
+    let $deleteButton = $(this);
+    let $tr = $deleteButton.closest('tr'); // closest will work it's way up the heirarchy and attach data to the first 'tr' found
+    let taskId = $tr.data('id');
+    console.log('Task id is: ', taskId);
+
+    $.ajax({
+        method: 'DELETE',
+        url: `/tasks/${taskId}`
+    }).then(function (response) {
+        getTasks();
+    }).catch(function () {
+        console.log(`Couldn't delete your task: ${taskId}`);
+        alert(`Try again later`);
+    })
+} // end removeTask
+
+function updateStatus() {
+    let $updateButton = $(this);
+    let $tr = $updateButton.closest('tr');
+    let taskId = $tr.data('id');
+    let task = $tr.data();
+    console.log(taskId);
+    console.log(task.status);
+    $.ajax({
+        method: 'PUT',
+        url: `/tasks/${taskId}`,
+        data: task
+    }).then(function (response) {
+        getTasks();
+    })
+        .catch(function () {
+            console.log('Something bad happened can not update', taskId);
+            alert(`Couldn't update task, try again later`);
+        })
 }
