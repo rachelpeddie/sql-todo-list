@@ -46,15 +46,30 @@ function addTask() {
 } // end addTask
 
 function renderTasks(taskArray) {
-    for( task of taskArray ){
-        let $tr = $(`
+    $('#task-list').empty();
+    for (task of taskArray) {
+        if (task.status === 'Incomplete') {
+            let $tr = $(`
         <tr>
         <td>${task.taskname}</td>
         <td>${task.status}</td>
         <td><button class="btn-delete">Delete</button></td>
         </tr>
         `);
-        $('#task-list').append($tr);
-        $trbutton.data(task)
+            $('#task-list').append($tr);
+        }
+        else {
+            let $tr = $(`
+        <tr>
+        <td>${task.taskname}</td>
+        <td>${task.status}</td>
+        <td><button class="btn-delete">Delete</button></td>
+        </tr>
+        <td><button class="btn-status">Completed</button></td>
+        </tr>
+        `);
+            $('#task-list').append($tr);
+        }
     }
+    $tr.data(task);
 }
