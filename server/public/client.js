@@ -54,9 +54,11 @@ function renderTasks(taskArray) {
         <td>${task.taskname}</td>
         <td>${task.status}</td>
         <td><button class="btn-delete">Delete</button></td>
+        <td><button class="btn-status">Completed</button></td>
         </tr>
         `);
             $('#task-list').append($tr);
+            $tr.data(task);
         }
         else {
             let $tr = $(`
@@ -65,11 +67,10 @@ function renderTasks(taskArray) {
         <td>${task.status}</td>
         <td><button class="btn-delete">Delete</button></td>
         </tr>
-        <td><button class="btn-status">Completed</button></td>
         </tr>
         `);
             $('#task-list').append($tr);
+            $tr.data(task);
         }
     }
-    $tr.data(task);
 }
