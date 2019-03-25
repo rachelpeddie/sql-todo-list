@@ -55,8 +55,8 @@ function renderTasks(taskArray) {
             let $tr = $(`<tr>
                 <td>${task.taskname}</td>
                 <td>${task.status}</td>
-                <td><button class="btn-delete">Delete</button></td>
-                <td><button class="btn-status">Completed</button></td>
+                <td><button class="dom-btn btn-delete">Delete</button></td>
+                <td><button class="dom-btn btn-status">Completed</button></td>
             </tr>`);
             $('#task-list').append($tr);
             $tr.data(task);
@@ -65,7 +65,7 @@ function renderTasks(taskArray) {
             let $tr = $(`<tr class="task-complete">
                 <td>${task.taskname}</td>
                 <td>${task.status}</td>
-                <td><button class="btn-delete">Delete</button></td>
+                <td><button class="dom-btn btn-delete">Delete</button></td>
                 <td> </td>
             </tr>`);
             $('#task-list').append($tr);
@@ -80,17 +80,33 @@ function removeTask() {
     let $tr = $deleteButton.closest('tr'); // closest will work it's way up the heirarchy and attach data to the first 'tr' found
     let taskId = $tr.data('id');
     console.log('Task id is: ', taskId);
-
-    $.ajax({
-        method: 'DELETE',
-        url: `/tasks/${taskId}`
-    }).then(function (response) {
-        getTasks();
-    }).catch(function () {
-        console.log(`Couldn't delete your task: ${taskId}`);
-        alert(`Try again later`);
-    })
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this task!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            swal("Poof! Your task has been deleted!", {
+                icon: "success",
+            });
+            $.ajax({
+                method: 'DELETE',
+                url: `/tasks/${taskId}`
+            }).then(function (response) {
+                getTasks();
+            }).catch(function () {
+                console.log(`Couldn't delete your task: ${taskId}`);
+                alert(`Try again later`);
+            })
+        }
+        else {
+            swal("Your task is safe!");
+        }
+    });
 } // end removeTask
+
 
 function updateStatus() {
     let $updateButton = $(this);
