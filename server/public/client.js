@@ -80,17 +80,33 @@ function removeTask() {
     let $tr = $deleteButton.closest('tr'); // closest will work it's way up the heirarchy and attach data to the first 'tr' found
     let taskId = $tr.data('id');
     console.log('Task id is: ', taskId);
-
-    $.ajax({
-        method: 'DELETE',
-        url: `/tasks/${taskId}`
-    }).then(function (response) {
-        getTasks();
-    }).catch(function () {
-        console.log(`Couldn't delete your task: ${taskId}`);
-        alert(`Try again later`);
-    })
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this task!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            swal("Poof! Your imaginary file has been deleted!", {
+                icon: "success",
+            });
+            $.ajax({
+                method: 'DELETE',
+                url: `/tasks/${taskId}`
+            }).then(function (response) {
+                getTasks();
+            }).catch(function () {
+                console.log(`Couldn't delete your task: ${taskId}`);
+                alert(`Try again later`);
+            })
+        }
+        else {
+            swal("Your imaginary file is safe!");
+        }
+    });
 } // end removeTask
+
 
 function updateStatus() {
     let $updateButton = $(this);
