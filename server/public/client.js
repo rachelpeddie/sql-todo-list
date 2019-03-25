@@ -55,8 +55,8 @@ function renderTasks(taskArray) {
             let $tr = $(`<tr>
                 <td>${task.taskname}</td>
                 <td>${task.status}</td>
-                <td><button class="btn-delete">Delete</button></td>
-                <td><button class="btn-status">Completed</button></td>
+                <td><button class="dom-btn btn-delete">Delete</button></td>
+                <td><button class="dom-btn btn-status">Completed</button></td>
             </tr>`);
             $('#task-list').append($tr);
             $tr.data(task);
@@ -65,7 +65,7 @@ function renderTasks(taskArray) {
             let $tr = $(`<tr class="task-complete">
                 <td>${task.taskname}</td>
                 <td>${task.status}</td>
-                <td><button class="btn-delete">Delete</button></td>
+                <td><button class="dom-btn btn-delete">Delete</button></td>
                 <td> </td>
             </tr>`);
             $('#task-list').append($tr);
@@ -88,7 +88,7 @@ function removeTask() {
         dangerMode: true,
     }).then((willDelete) => {
         if (willDelete) {
-            swal("Poof! Your imaginary file has been deleted!", {
+            swal("Poof! Your task has been deleted!", {
                 icon: "success",
             });
             $.ajax({
@@ -102,7 +102,7 @@ function removeTask() {
             })
         }
         else {
-            swal("Your imaginary file is safe!");
+            swal("Your task is safe!");
         }
     });
 } // end removeTask
