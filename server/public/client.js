@@ -7,7 +7,7 @@ function onStart() {
     getTasks();
     $('#btn-add-task').on('click', addTask);
     $('#task-list').on('click', '.btn-delete', removeTask);
-    $('#task-list').on('click', '.btn-status', updateStatus)
+    $('#task-list').on('click', '.btn-status', updateStatus);
 }
 
 // function to empty all inputs on click
