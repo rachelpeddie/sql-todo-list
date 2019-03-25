@@ -24,6 +24,8 @@ function getTasks() {
         let tasks = response;
         console.log(`Here are all of your tasks: ${tasks}`);
         renderTasks(tasks);
+    }).catch( function (error){
+        alert(error);
     })
 } // end getTasks
 
