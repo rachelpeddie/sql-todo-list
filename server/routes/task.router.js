@@ -5,7 +5,7 @@ const router = express.Router();
 const pool = require('./pool');
 
 router.get('/', (req, res) => {
-    console.log('getting all koalas from db');
+    console.log('getting all tasks from db');
     pool.query('SELECT * FROM "tasks" ORDER BY "taskname";')
     .then((result) => {
         res.send(result.rows);
