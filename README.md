@@ -1,15 +1,14 @@
-
-## Weekend Challenge: SQL To-Do List
-
-Hello Primers! 
-
-Welcome to your weekend challenge!
-
-Full stack is pretty awesome, huh? The idea that you are able to spin up a full application architecture in such a short time is pretty incredible. This weekend is all about showing us that you have a handle on each of the different parts of the full stack. 
-
 ## The To-Do App
 
-You are going to create a 'TO DO' application. This type of application is very common to tackle when learning a new language, which makes it extremely valuable to work through for the first time. Chances are good that at some point in your career you will tackle this again while learning another language.
+This is a an application that allows the user to create a to-do list.  They can add their tasks into the input field, click the 'Add Task' button, and their task will be listed below in a table.  Each task will include a 'Complete' button so the user can mark the task as completed, and a delete button to remove tasks from the list.
+
+**Built With**
+javascript
+jquery
+express
+ajax
+
+
 
 **Here are the specific components for the challenge:**
 
